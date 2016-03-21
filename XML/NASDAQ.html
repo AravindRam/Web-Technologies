@@ -1,0 +1,111 @@
+<html>
+	<head>
+		<style type="text/css">
+			#form{
+			   margin-top:100px;
+			   margin-left:640px;
+			}
+			#textfield{
+			   margin-left:50px;
+			}
+			#button{
+			   margin-left:75px;
+			}
+		</style>
+		<script language="Javascript">
+			var xmlDoc;
+			
+			function loadXML(url) {
+				if(window.XMLHttpRequest){
+					xmlhttp=new XMLHttpRequest();
+				}
+				else{
+					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.open("GET",url,false);
+					xmlhttp.send();
+				if(xmlhttp.status==404){
+					alert("XML file not found");
+				}
+				xmlDoc=xmlhttp.responseXML;
+				return xmlDoc;
+			}	
+			
+			function display(){
+				ELEMENT_NODE = 1;
+				html_text="";
+				if(textfield.value){
+					xmlDoc=loadXML(textfield.value);
+					if (xmlDoc.documentElement.nodeName=="parsererror"){
+						alert("Error in XML file");
+						return(null);
+					}
+					header=xmlDoc.getElementsByTagName("Row");
+					dataNodeList=header.item(0).childNodes;
+					if(header.length>1){
+					headerNodeList=header.item(1).childNodes;
+					html_text+="<html><body><table border='2' cellpadding='5'><tr>";
+										var count=0;
+										for(i=0;i<dataNodeList.length;i++){
+											if(dataNodeList.item(i).nodeType==ELEMENT_NODE){
+												if(dataNodeList.item(i).nodeName == "Data"){
+												switch(count){
+													case 0: header_value = dataNodeList.item(i).textContent.trim() == "" ? "N.A." : dataNodeList.item(i).textContent; break;
+													case 1: header_value = dataNodeList.item(i).textContent.trim() == "" ? "N.A." : dataNodeList.item(i).textContent; break;
+													case 2: header_value = dataNodeList.item(i).textContent.trim() == "" ? "N.A." : dataNodeList.item(i).textContent; break;
+													case 3: header_value = dataNodeList.item(i).textContent.trim() == "" ? "N.A." : dataNodeList.item(i).textContent; break;
+													case 4: header_value = dataNodeList.item(i).textContent.trim() == "" ? "N.A." : dataNodeList.item(i).textContent; break;
+													case 5: header_value = dataNodeList.item(i).textContent.trim() == "" ? "N.A." : dataNodeList.item(i).textContent; break;
+													case 6: header_value = dataNodeList.item(i).textContent.trim() == "" ? "N.A." : dataNodeList.item(i).textContent; break;
+												}
+												 count++;
+												 html_text+="<th>"+header_value+"</th>";
+												}
+			
+													
+											}
+										}
+					html_text+="</tr>";
+										for(i=1;i<header.length;i++)
+										{
+											headerNodeList=header.item(i).childNodes;
+											html_text+="<tr>"
+											for(j=0;j<headerNodeList.length;j++)
+											{ 
+												if(headerNodeList.item(j).nodeType==ELEMENT_NODE){
+												    if(headerNodeList.item(j).textContent.trim() == null || headerNodeList.item(j).textContent.trim() == "")
+														html_text+="<td>"+"N.A."+"</td>";
+													else if(headerNodeList.item(j).nodeName=="Logo")
+														html_text+="<td><img src='"+headerNodeList.item(j).firstChild.nodeValue+"' width=80 height=80></td></tr>"; 
+													else if(headerNodeList.item(j).nodeName=="HomePage")
+														html_text+="<td><a href='"+headerNodeList.item(j).firstChild.nodeValue+"'>link to company</a></td>";		
+													else
+														html_text+="<td>"+headerNodeList.item(j).childNodes[0].nodeValue+"</td>";
+												}
+											}
+										}
+											html_text+="</table><noscript></bo"+"dy></html>";
+											new_window=window.open("","HW4","height=500,width=1000,scrollbars=yes");
+											new_window.document.write(html_text);
+											new_window.document.close();
+					 }
+					 else{
+						alert("No Companies in the XML file");
+					 }
+					}
+				else{
+					alert("Error: Do not submit an empty query!!");
+				}
+			}
+				
+		</script>
+	</head>
+	<body>
+		<form id="form" action="">
+			<label>Enter URL for Company List XML File</label><br /><br />
+			<input type="text" id="textfield" size="22" /><br /><br />
+			<input type="submit" id="button" value="Submit Query" onclick="display()"/>
+		</form>
+		<noscript>
+	</body>
+</html>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="invalid_files/intl.css" type="text/css"?>
+<parsererror xmlns="http://www.mozilla.org/newlayout/xml/parsererror.xml">XML Parsing Error: mismatched tag. Expected: &lt;/Symbol&gt;.
+Location: http://cs-server.usc.edu:45678/hw/hw4/invalid.xml
+Line Number 15, Column 19:<sourcetext>    &lt;Symbol&gt;MSFT&lt;/Data&gt;
+------------------^</sourcetext></parsererror>

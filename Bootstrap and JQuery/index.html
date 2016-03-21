@@ -1,0 +1,630 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+		<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script><style>
+			#image{
+				margin-top:20px;
+			}
+			#shopping{
+				positiion:absolute;
+				margin-left:120px;
+				margin-top:-55px;
+			}
+			.field{
+				padding-right:20px;
+			}
+		</style>
+	</head>
+	<body>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	  <script>
+		  window.fbAsyncInit = function() {
+			FB.init({
+			  appId      : <your-appId>,
+			  xfbml      : true,
+			  version    : 'v2.3'
+			});
+		  };
+
+		  (function(d, s, id){
+			 var js, fjs = d.getElementsByTagName(s)[0];
+			 if (d.getElementById(id)) {return;}
+			 js = d.createElement(s); js.id = id;
+			 js.src = "//connect.facebook.net/en_US/sdk.js";
+			 fjs.parentNode.insertBefore(js, fjs);
+		   }(document, 'script', 'facebook-jssdk'));
+		   
+		   function fbCall(index)
+			{
+				var viewitemurl = json_obj["item"+index].basicInfo.viewitemURL;
+				var galleryurl = json_obj["item"+index].basicInfo.galleryURL;
+				var cost = json_obj["item"+index].basicInfo.shippingServiceCost;
+				var price = json_obj["item"+index].basicInfo.convertedCurrentPrice;
+				var title = json_obj["item"+index].basicInfo.title;
+				var location = json_obj["item"+index].basicInfo.location;
+				var description;
+				if(cost > 0)
+					description = "(FREE Shipping), Location:"+location;
+				else
+					description = "Price:$"+price+"(+"+cost+" for shipping), Location:"+location;
+		
+				FB.ui({
+							method: 'feed',
+							link: viewitemurl,
+							caption: 'Ebay Shopping Info',
+							picture: galleryurl,
+							description: description,
+							name: title,
+						}, function(response) {
+
+							if (response) {
+								if (!response.error_code) {
+									alert("Posted Successfully");
+								}
+								else
+								{
+									alert("Not posted");
+								}
+							}
+						});
+			}
+</script>
+	  <div class="container">
+			<p><img id="image" src="ebay.jpg" width="110px" height="50px" /><h2 id="shopping"><b>Shopping</b></h2></p><br />
+				<form class="form-horizontal" id="myform" role="form" >
+					
+					<div class="form-group">
+						<div class="control-label col-sm-2"><b>Key Words: <font color="red">*</font></b></div>																																																																																	
+						<div class="col-sm-6"><input type="text" onkeyup="validatek(this.value)" class="form-control" id="keywords" name="keywords" placeholder="Enter keyword"/>
+						<span id="keyerror" style="color:#A74544;" ></span>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="control-label col-sm-2"><b>Price Range:</b></div>
+						<div class="col-sm-3"><input type="text" onblur="validatep()" onkeyup="validateminmax1(this.value)" class="form-control" id="from" name="from" placeholder="from($)"/> 
+											  <span id="mierror" style="color:#A74544;"></span>
+						</div>
+						<div class="col-sm-3"><input type="text" onblur="validatep()" onkeyup="validateminmax2(this.value)" class="form-control" id="to" name="to" placeholder="to($)"/>
+											 <span id="maerror" style="color:#A74544;"></span>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="control-label col-sm-2"><b>Condition:</b></div>
+						<div class="col-sm-10">
+							<label class="checkbox-inline"><input type="checkbox" id="condition1" name="condition1" value="1000"/>New</label>
+							<label class="checkbox-inline"><input type="checkbox" id="condition2" name="condition2" value="3000"/>Used</label>
+							<label class="checkbox-inline"><input type="checkbox" id="condition3" name="condition3" value="4000"/>Very Good</label>
+							<label class="checkbox-inline"><input type="checkbox" id="condition4" name="condition4" value="5000"/>Good</label>
+							<label class="checkbox-inline"><input type="checkbox" id="condition5" name="condition5" value="6000"/>Acceptable</label>
+						</div>
+					</div>
+					
+					<div class="form-group">	
+						<div class="control-label col-sm-2"><b>Buying Formats:</b></div>
+						<div class="col-sm-10">
+							<label class="checkbox-inline"><input type="checkbox" id="buy1" name="buy1" value="FixedPrice"/>Buy It Now</label>
+							<label class="checkbox-inline"><input type="checkbox" id="buy2" name="buy2" value="Auction"/>Auction</label>
+							<label class="checkbox-inline"><input type="checkbox" id="buy3" name="buy3" value="Classified"/>Classified Ads</label>
+						</div>
+					</div>
+					
+					<div class="form-group">		
+						<div class="control-label col-sm-2"><b>Seller:</b></div>
+						<div class="col-sm-6">
+							<label class="checkbox-inline"><input type="checkbox"  id="returnsAcceptedOnly" name="returnsAcceptedOnly" value="true"/>Return accepted</label>
+						</div>
+					</div>
+					
+					<div class="form-group">	
+						<div class="control-label col-sm-2"><b>Shipping:</b></div>
+						<div class="col-sm-6" class="form-control">	
+							<label class="checkbox-inline"><input type="checkbox" id="shippingFree" name="shippingFree" value="true"/>Free Shipping</label>
+							<label class="checkbox-inline"><input type="checkbox" id="shippingExpedited" name="shippingExpedited" value="Expedited"/>Expedited shipping available</label>
+							<br /><br />
+						
+							<div>
+								<input type="text" onblur="validatemaxd()" onkeyup="validateminmax3(this.value)" class="form-control" size="10" id="days" name="days" placeholder="Max handling time(days)"/>
+								<span id="maxerror" style="color:#A74544;"></span>
+							</div>
+						</div>
+					</div>
+				
+					
+					<div class="form-group">
+						<div class="control-label col-sm-2"><b>Sort by:</b></div>
+						<div class="col-sm-6">
+							<select id="sort" name="sort" class="form-control">
+								<option value="Best Match">Best Match</option>
+								<option value="CurrentPriceHighest">Price: highest first</option>
+								<option value="PricePlusShippingHighest">Price + Shipping: highest first</option>
+								<option value="PricePlusShippingLowest">Price + Shipping: lowest first</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="control-label col-sm-2"><b>Results Per Page:</b></div>
+						<div class="col-sm-6">
+							<select id="result" name="result" class="form-control">
+								<option value="5">5</option>
+								<option value="10">10</option>
+							</select>
+						</div>
+					</div>
+				
+				<div class="col-sm-offset-6" style="margin-left:52%">
+				<div align="left" >
+					<input type="button" class="btn btn-default" name="clear" id="clear" value="clear" style="width:75px"/>
+					<input type="button" class="btn btn-primary" id="search" name="search" value="search" style="width:75px"/>
+				</div><br /><br />
+				</div>
+				
+				<div class="row" id="searchResult">
+			    </div>
+				
+				<div class="row" id="paginationBar">
+				</div>
+				
+				<div class="row" id="scroller">
+				</div>
+				
+</div>
+		</form>	
+	</div>
+		<script language="Javascript" >
+		var regexp     = /^(\+|-)?((\d+(\.\d+)?)|(\.\d+))$/;
+function isD(s){
+return String(s).search (regexp) != -1;
+       }
+function isI(nn) {
+return nn % 1 === 0;
+}
+function validatek(chhhk)
+	{
+		if (chhhk==null || chhhk.length==0 || chhhk=="" || chhhk==" ")
+		{	
+			$("#keywords").parent().addClass("has-error");
+			$("#keyerror").text("Please enter a key word");
+			
+			return false;
+		}
+		else
+		{
+			$("#keywords").parent().removeClass("has-error");
+			$("#keyerror").text(" ");
+			return true;
+		}
+		
+	}
+function validateminmax1(p)
+	{
+		if (p==null || p.length==0 || p=="" || p==" ")
+		{	
+			$("#from").parent().removeClass("has-error");
+			$("#mierror").text(" ");
+			return true;
+		}
+		
+	}
+function validateminmax2(p)
+	{
+		if (p==null || p.length==0 || p=="" || p==" ")
+		{	
+			$("#to").parent().removeClass("has-error");
+			$("#maerror").text(" ");
+			return true;
+		}
+		
+	}
+function validateminmax3(p)
+	{
+		if (p==null || p.length==0 || p=="" || p==" ")
+		{	
+			$("#days").parent().removeClass("has-error");
+			$("#maxerror").text(" ");
+			return true;
+		}
+		
+	}
+function validatemaxd()
+	{
+		var a1 = document.getElementById('days').value ;
+		if (a1!=null && a1!= "" && a1!= " " && ( !isD(a1) || !isI(a1) || parseInt(a1) < 1 ))
+		{	
+			$("#days").parent().addClass("has-error");
+			$("#maxerror").text("Max handling time should be a valid digit");
+			if(parseInt(a1) < 1)
+					$("#maxerror").text("Max handling time should be greater than or equal to 1.");
+			return false;
+		}
+		else
+		{
+			$("#days").parent().removeClass("has-error");
+			$("#maxerror").text(" ");
+			return true;
+		}
+		
+	}
+	function validatep()
+	{
+		var a1= document.getElementById('from').value ;
+		var b1 = document.getElementById('to').value ;
+        if(a1!=null && a1!= "" && a1!= " " && !isD(a1))
+		{
+		
+			$("#from").parent().addClass("has-error");
+			$("#mierror").text("Price should be a valid number");
+			return false;
+		}
+        if(a1!=null && a1!= "" && a1!= " " && parseFloat(a1)<0.0)
+		{
+			$("#from").parent().addClass("has-error");
+			$("#mierror").text("Minimum price cannot be below 0");
+			return false;
+		}
+		if(b1!=null && b1!= "" && b1!= " " && !isD(b1))
+		{
+			$("#to").parent().addClass("has-error");
+			$("#maerror").text("Price should be a valid number");
+			return false;
+		}
+		if(b1!=null && b1!= "" && b1!= " " && parseFloat(b1)<0.0)
+		{
+			$("#to").parent().addClass("has-error");
+			$("#maerror").text("Maximum price cannot be below 0");
+			return false;
+		}
+		if(b1!=null && b1!= "" && b1!= " " && a1!=null && a1!= "" && a1!= " " && parseFloat(b1)<parseFloat(a1))
+		{
+			$("#to").parent().addClass("has-error");
+			$("#maerror").text("Maximum price cannot be less than the minimum price");
+			return false;
+		}
+		
+		$("#from").parent().removeClass("has-error");
+		$("#to").parent().removeClass("has-error");
+		$("#maerror").text(" ");
+		$("#mierror").text(" ");
+		return true;
+	}    
+
+		$(document).ready(function(){
+			$("#clear").click(function(){
+				window.location.assign("index.html");
+			});
+			$('#search').click(function() {
+				var fromValue = "nil", toValue = "nil";
+					if ($("#from").val().length) {
+						fromValue = $("#from").val();
+					}
+					if ($("#to").val().length) {
+						toValue = $("#to").val();
+					}
+				
+				var cond1 = "nil", cond2 = "nil", cond3 = "nil", cond4 = "nil", cond5 = "nil";
+					
+					if ($("#condition1").is(":checked")) {
+						cond1 = 1000;
+					}
+					if ($("#condition2").is(":checked")) {
+						cond2 = 3000;
+					}
+					if ($("#condition3").is(":checked")) {
+						cond3 = 4000;
+					}
+					if ($("#condition4").is(":checked")) {
+						cond4 = 5000;
+					}
+					if ($("#condition5").is(":checked")) {
+						cond5 = 6000;
+					}
+					
+				var buy1Value = "nil", buy2Value  = "nil", buy3Value = "nil";
+					
+					if ($("#buy1").is(":checked")) {
+						buy1Value = "FixedPrice";
+					}
+					if ($("#buy2").is(":checked")) {
+						buy2Value = "Auction";
+					}
+					if ($("#buy3").is(":checked")) {
+						buy3Value = "Classified";
+					}
+					
+				var sellerValue = "nil";
+					
+					if ($("#returnsAcceptedOnly").is(":checked")) {
+						sellerValue = "true";
+					}
+					
+				var freeShipping = "nil", expeditedShipping = "nil";
+					
+					if ($("#shippingFree").is(":checked")) {
+						freeShipping = "Free";
+					}
+					if ($("#shippingExpedited").is(":checked")) {
+						expeditedShipping = "Expedited";
+					}
+					
+				var handlingTime = "nil";
+					 if ($("#days").val().length) {
+						handlingTime = $("#days").val();
+					}
+					
+				var sortBy = $("#sort").val();
+					
+				var results = $("#result").val();
+
+			$.ajax({
+			  url: 'index.php',
+			  data: {
+						 keywords:$("#keywords").val(),
+						 from:fromValue, 
+						 to:toValue,
+						 condition1: cond1,
+						 condition2: cond2,
+						 condition3: cond3,
+						 condition4: cond4,
+						 condition5: cond5,
+						 buy1: buy1Value,
+						 buy2: buy2Value,
+						 buy3: buy3Value,
+						 returnsAcceptedOnly: sellerValue,
+						 shippingFree: freeShipping,
+						 shippingExpedited: expeditedShipping,
+						 days: handlingTime,
+						 sort: sortBy,
+						 result: results,
+					},
+				  error: function(data, text, error) {
+					  document.write("Error : " + data);
+				  },
+			  success: function(data) {
+				  json_obj = jQuery.parseJSON(data);
+				  if(json_obj.ack == "No results found"){
+					$("#searchResult").html('<h3>No results found</h3>');
+					$("#paginationBar").html("");
+				  }
+				  else{
+				  var itemCount=json_obj.itemCount;
+				  var resultCount=json_obj.resultCount;
+				  var pageNumber = json_obj.pageNumber;
+				  var no_of_items=(itemCount < resultCount)?itemCount:resultCount;
+				  lower_limit = pageNumber*itemCount-itemCount+1
+				  upper_limit = pageNumber*itemCount
+				  if(upper_limit > resultCount)
+					upper_limit = resultCount
+				  $("#searchResult").html("");
+				  $("#paginationBar").html("");
+				 $('#searchResult').append("<h3>"+lower_limit+"-"+upper_limit+" items out of "+resultCount+"</h3");
+				  
+				  var shipServiceCost,rating,topRatingImage,storeName,expedited,oneday,retAccepted,locations,target, toggle, modals, id;
+				  for(var i=0; i<no_of_items; i++)
+				  {
+				  
+					jsonobj=json_obj["item"+i];
+					if(jsonobj.basicInfo.shippingServiceCost > 0)
+						shipServiceCost = "(+$"+jsonobj.basicInfo.shippingServiceCost+" for shipping)";
+					else
+						shipServiceCost="(FREE Shipping)";
+						
+					if(jsonobj.sellerInfo.topRatedSeller == "true")
+						rating = "<span class='glyphicon glyphicon-ok' style='color:green'></span>";
+					else if(jsonobj.sellerInfo.topRatedSeller == "false")
+						rating = "<span class='glyphicon glyphicon-remove' style='color:red'></span>";
+					
+					if(jsonobj.basicInfo.topRatedListing == "true")
+						topRatingImage = "<img src='itemTopRated.jpg' width='20' height='20' class='img-responsive'>";
+					else 
+						topRatingImage = ""
+						
+					if(jsonobj.sellerInfo.sellerStoreName != "")
+						storeName= "<a href="+jsonobj.sellerInfo.sellerStoreURL+">"+jsonobj.sellerInfo.sellerStoreName+"</a>";
+					else
+						storeName= "N/A";
+					
+					if(jsonobj.shippingInfo.expeditedShipping == "true")
+						expedited = "<span class='glyphicon glyphicon-ok' style='color:green'></span>";
+					else if(jsonobj.shippingInfo.expeditedShipping == "false")
+						expedited = "<span class='glyphicon glyphicon-remove' style='color:red'></span>";
+						
+					if(jsonobj.shippingInfo.oneDayShippingAvailable == "true")
+						oneday = "<span class='glyphicon glyphicon-ok' style='color:green'></span>";
+					else if(jsonobj.shippingInfo.oneDayShippingAvailable == "false")
+						oneday = "<span class='glyphicon glyphicon-remove' style='color:red'></span>";
+					
+					if(jsonobj.shippingInfo.returnsAccepted == "true")
+						retAccepted = "<span class='glyphicon glyphicon-ok' style='color:green'></span>";
+					else if(jsonobj.shippingInfo.returnsAccepted == "false")
+						retAccepted = "<span class='glyphicon glyphicon-remove' style='color:red'></span>";
+					
+					if(jsonobj.shippingInfo.shipToLocations instanceof Array)
+						locations = jsonobj.shippingInfo.shipToLocations.toString();
+					else
+						locations = jsonobj.shippingInfo.shipToLocations; 
+						
+					var pic = jsonobj.basicInfo.galleryURL;
+					
+						target = '#itemdisp'+i;
+						id = 'itemdisp'+i;
+						toggle = 'modal';
+						modals = '<div class="modal fade" id='+id+' tabindex=-1" role="dialog" aria-labelledby='+id+' aria-hidden="true">'+
+						'<div class="modal-dialog">'+
+						'<div class="modal-content">'+
+						'<div class="modal-header">'+
+						'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+						'<h4 class="modal-title" id="itemdisp">'+jsonobj.basicInfo.title+'</h4></div>'+
+						'<div class="modal-body">'+
+						'<img class="media-object" src='+jsonobj.basicInfo.galleryURL+' height="800" width="800">'+
+						'</div>'+
+						'</div></div></div>';
+					
+
+				  var query_string = '<div class="media"><div class="media-left"><a href="#" data-target='+target+' data-toggle='+toggle+'><img class="media-object" width="60" height="60" src='+jsonobj.basicInfo.galleryURL+' alt="itemPic"></a></div>'+modals;
+				  query_string+='<div class="media-body"><h5 class="media-heading"><a href='+jsonobj.basicInfo.viewItemURL+'>'+jsonobj.basicInfo.title+'</a></h5>';
+				  query_string+='<div class="row"><div class="col-sm-3"><b>Price:$'+jsonobj.basicInfo.convertedCurrentPrice+'</b> '+shipServiceCost+'</div><div class="col-sm-3">&nbsp;<i>Location:'+jsonobj.basicInfo.location+'</i>&nbsp;&nbsp;</div>';
+				  query_string+='<div class="col-sm-2"><label><a data-toggle="collapse" href="#detcoll'+i+'" aria-expanded="false" aria-controls="#detcoll'+i+'">View Details</a>&nbsp;&nbsp;</label></div><div class="col-sm-1">'+topRatingImage;
+				  query_string+='&nbsp;</div><div class="col-sm-1"><img onclick="fbCall('+i+')"'+'src="fb.png" width="20" height="20" class="img-responsive"></div></div></div></div><br />';
+				  $("#searchResult").append(query_string);
+				  
+				  $("#searchResult").append('<div role="tabpanel" id="detcoll'+i+'" class="collapse"><ul id=dets'+i+'" class="nav nav-tabs" role="tablist">'+
+								'<li role="presentation" class="active"><a href="#basic'+i+'" aria-controls="basic'+i+'" role="tab" data-toggle="tab">Basic Info</a></li>'+
+								'<li role="presentation"><a href="#seller'+i+'" aria-controls="seller'+i+'" role="tab" data-toggle="tab">Seller Info</a></li>'+
+								'<li role="presentation"><a href="#shipping'+i+'" aria-controls="shipping'+i+'" role="tab" data-toggle="tab">Shipping Info</a></li>'+
+								'</ul>'+
+								'<div class="tab-content">'+
+								'<div role="tabpanel" class="tab-pane active" id="basic'+i+'">'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>Category name</b></div>'+
+										'<div class="col-sm-4">'+jsonobj.basicInfo.categoryName+'</div>'+
+									'</div>'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>Condition</b></div>'+
+										'<div class="col-sm-4">'+jsonobj.basicInfo.conditionDisplayName+'</div>'+
+									'</div>'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>Buying format</b></div>'+
+										'<div class="col-sm-4">'+jsonobj.basicInfo.listingType+'</div>'+
+									'</div>'+
+								'</div>'+
+								'<div role="tabpanel" class="tab-pane" id="seller'+i+'">'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>User name</b></div>'+
+										'<div class="col-sm-4">'+jsonobj.sellerInfo.sellerUserName+'</div>'+
+									'</div>'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>Feedback score</b></div>'+
+										'<div class="col-sm-4">'+jsonobj.sellerInfo.feedbackScore+'</div>'+
+									'</div>'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>Positive feedback</b></div>'+
+										'<div class="col-sm-4">'+jsonobj.sellerInfo.positiveFeedbackPercent+'%</div>'+
+									'</div>'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>Feedback rating</b></div>'+
+										'<div class="col-sm-4">'+jsonobj.sellerInfo.feedbackRatingStar+'</div>'+
+									'</div>'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>Top rated</b></div>'+
+										'<div class="col-sm-4">'+rating+'</div>'+
+									'</div>'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>Store</b></div>'+
+										'<div class="col-sm-4">'+storeName+'</div>'+
+									'</div>'+
+								'</div>'+
+								'<div role="tabpanel" class="tab-pane" id="shipping'+i+'">'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>Shipping type</b></div>'+
+										'<div class="col-sm-4">'+jsonobj.shippingInfo.shippingType+'</div>'+
+									'</div>'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>Handling time</b></div>'+
+										'<div class="col-sm-4">'+jsonobj.shippingInfo.handlingTime+' day(s)</div>'+
+									'</div>'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>Shipping locations</b></div>'+
+										'<div class="col-sm-4">'+locations+'</div>'+
+									'</div>'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>Expedited shipping</b></div>'+
+										'<div class="col-sm-4">'+expedited+'</div>'+
+									'</div>'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>One day shipping</b></div>'+
+										'<div class="col-sm-4">'+oneday+'</div>'+
+									'</div>'+
+									'<div class="row">'+
+										'<div class="col-sm-4"><b>Returns accepted</b></div>'+
+										'<div class="col-sm-4">'+retAccepted+'</div>'+
+									'</div>'+
+								'</div>'+
+								'</div></div>');
+					}
+						num1=1;
+						last=0;
+						total_pages=resultCount/itemCount;
+						var navigation_html = '<nav><ul class="pagination">';
+						navigation_html += '<li class="previous_link-1" id="previous_link" aria-label="Previous">';
+						navigation_html += '<a class="previous_link"><span aria-hidden="true">&laquo;</span></a>';
+						navigation_html += '</li>';
+						var current_link = 1;
+						while(total_pages >=(current_link+last) && current_link <= 5){
+						navigation_html += '<li class="page_link" id="id' + (current_link+last) +'">';
+						navigation_html += '<a class="go_link" id="' + (current_link+last) +'">'+ (current_link+last) +'</a>';
+						current_link++;
+						navigation_html += '</li>';
+						}
+						navigation_html += '<li class="next_link-1" id="next_link" aria-label="Next">';
+						navigation_html += '<a class="next_link"><span aria-hidden="true">&raquo;</span></a>';
+						navigation_html += '</li>';
+						navigation_html += '</ul></nav>';
+						$("#paginationBar").append(navigation_html);
+						var current="id"+num1;
+						var currentpage="#paginationBar #"+current;
+						$(currentpage).addClass('active');        
+						if(num1 == 1)
+							$('#paginationBar #previous_link').addClass('disabled');    
+						if(num1 == total_pages)
+							$('#paginationBar #next_link').addClass('disabled');    
+						
+						$(".next_link").click(function(){
+						  if($('.active').next('.page_link').length==true){  
+							num1=num1+1;  
+							$('#paginationBar').html(' ');
+							$('html, body').animate({
+												scrollTop: $("#scroller").offset().top
+											}, 2000);
+						  }
+							else{  
+							last=num1;
+							num1=num1+1;
+							$('#paginationBar').html(' ');
+							$('html, body').animate({
+												scrollTop: $("#scroller").offset().top
+											}, 2000);
+							}
+						});
+						$(".previous_link").click(function(){
+						  if($('.active').prev('.page_link').length==true){
+							num1=num1-1; 
+							$('#paginationBar').html(' ');
+							$('html, body').animate({
+												scrollTop: $("#scroller").offset().top
+											}, 2000);
+						  }
+							else
+							{      
+							num1=num1-1;
+							last=num1-5;
+							$('#paginationBar').html(' ');
+							$('html, body').animate({
+												scrollTop: $("#scroller").offset().top
+											}, 2000);
+							}
+
+						});
+						$(".go_link").click(function(){
+							var ind= $(this).attr('id');
+							num1=ind;
+							num1=parseInt($(this).attr('id'));  
+						});    
+
+					}
+			  },
+			  type: 'GET'
+		   });
+		});
+	});
+		</script>
+		<noscript>
+	</body>
+</html>

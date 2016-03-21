@@ -1,0 +1,559 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.online.shopping.ebayandroidapp.DetailsActivity"
+    android:id="@+id/activity_layout"
+    android:background="#ffffffff">
+
+    <WebView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_weight="1"
+        android:layout_marginLeft="100dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/titleView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="10dp"
+        android:textColor="#f8000000"
+        android:textStyle="bold"
+        android:width="370dp"
+        android:visibility="visible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/priceView"
+        android:layout_below="@+id/titleView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textStyle="bold"
+        android:width="370dp" />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/locationView"
+        android:layout_below="@+id/priceView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:width="370dp"
+        android:visibility="visible" />
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal"
+    android:id="@+id/badgeLinear"
+    android:layout_below="@+id/locationView"
+    android:layout_marginTop="10dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/badgeView"
+        android:layout_below="@+id/locationView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#ffffffff"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buy Now"
+        android:id="@+id/buyButton"
+        android:layout_below="@+id/locationView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="90dp"
+        android:background="#ff22b2ff" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fbButton"
+        android:layout_below="@+id/locationView"
+        android:layout_toRightOf="@+id/buyButton"
+        android:layout_alignRight="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView"
+        android:background="#ffffffff"
+        android:layout_marginTop="10dp"
+        android:maxWidth="250dp"
+        android:layout_marginLeft="80dp"
+        android:onClick="onFbClick" />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:id="@+id/basicLinear"
+        android:layout_below="@+id/badgeLinear"
+        android:layout_marginTop="10dp">
+
+        <Button android:id="@+id/basicButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BASIC INFO"
+            android:layout_marginRight="0dp"
+            android:width="100dp"
+            android:visibility="visible"
+            android:background="#ff90deff"
+            android:onClick="clickBasic" />
+
+        <Button android:id="@+id/sellerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SELLER"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="0dp"
+            android:width="100dp"
+            android:onClick="clickSeller"
+            android:background="#ffe2deff" />
+
+        <Button android:id="@+id/shippingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SHIPPING"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:width="100dp"
+            android:layout_marginRight="10dp"
+            android:onClick="clickShipping"
+            android:background="#ffe2deff" />
+
+    </LinearLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/basicRelative"
+        android:layout_below="@+id/basicLinear"
+        android:background="#ffffffff"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/categoryNameLabel"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:width="140dp"
+            android:text="Category Name"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/categoryNameValue"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/categoryNameLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/conditionLabel"
+            android:layout_below="@+id/categoryNameLabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:text="Condition"
+            android:width="140dp"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/conditionValue"
+            android:layout_below="@+id/categoryNameValue"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/conditionLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/buyLabel"
+            android:layout_below="@+id/conditionLabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:width="140dp"
+            android:text="Buying Format"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/buyValue"
+            android:layout_below="@+id/conditionValue"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/buyLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/sellerRelative"
+        android:layout_below="@+id/basicLinear"
+        android:background="#ffffffff"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/userNameLabel"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:width="140dp"
+            android:text="User Name"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/userNameValue"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/userNameLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/feedbackLabel"
+            android:layout_below="@+id/userNameLabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:text="Feedback Score"
+            android:width="140dp"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/feedbackValue"
+            android:layout_below="@+id/userNameValue"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/feedbackLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/positiveLabel"
+            android:layout_below="@+id/feedbackLabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:text="Positive Feedback"
+            android:width="140dp"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/positiveValue"
+            android:layout_below="@+id/feedbackValue"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/positiveLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/ratingLabel"
+            android:layout_below="@+id/positiveLabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:text="Feedback Rating"
+            android:width="140dp"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/ratingValue"
+            android:layout_below="@+id/positiveValue"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/ratingLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/topRatedLabel"
+            android:layout_below="@+id/ratingLabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:text="Top Rated"
+            android:width="140dp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/topRatedValue"
+            android:layout_below="@+id/ratingValue"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/topRatedLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/storeLabel"
+            android:layout_below="@+id/topRatedLabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="22dp"
+            android:text="Store"
+            android:width="140dp"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/storeValue"
+            android:layout_below="@+id/topRatedValue"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/storeLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/shippingRelative"
+        android:layout_below="@+id/basicLinear"
+        android:background="#ffffffff"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/shippingTypeLabel"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:width="140dp"
+            android:text="Shipping Type"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/shippingTypeValue"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/shippingTypeLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/handlingTimeLabel"
+            android:layout_below="@+id/shippingTypeLabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:text="Handling Time"
+            android:width="140dp"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/handlingTimeValue"
+            android:layout_below="@+id/shippingTypeValue"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/handlingTimeLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/shippingLocationsLabel"
+            android:layout_below="@+id/handlingTimeLabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:text="Shipping Locations"
+            android:width="140dp"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/shippingLocationsValue"
+            android:layout_below="@+id/handlingTimeValue"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/shippingLocationsLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/expeditedLabel"
+            android:layout_below="@+id/shippingLocationsLabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:text="Expedited Shipping"
+            android:width="140dp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/expeditedValue"
+            android:layout_below="@+id/shippingLocationsValue"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/expeditedLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/oneDayLabel"
+            android:layout_below="@+id/expeditedLabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="23dp"
+            android:text="One Day Shipping"
+            android:width="140dp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/oneDayValue"
+            android:layout_below="@+id/expeditedValue"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/oneDayLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/retAccLabel"
+            android:layout_below="@+id/oneDayLabel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="25dp"
+            android:text="Returns Accepted"
+            android:width="140dp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/retAccValue"
+            android:layout_below="@+id/oneDayValue"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/retAccLabel"
+            android:width="180dp"
+            android:visibility="visible"
+            android:layout_marginLeft="10dp" />
+    </RelativeLayout>
+
+
+    </RelativeLayout>
+</ScrollView>

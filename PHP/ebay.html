@@ -1,0 +1,185 @@
+<html>
+	<head>
+		<style type="text/css">
+			.layout{
+				border:2px solid;
+			}
+			.entries{
+				position:relative;
+				left:130px;
+				top:-19px;
+				padding-top:0px;
+			}
+			#inner{
+				margin-left:15px;
+				margin-right:15px;
+				margin-bottom:15px;
+			}
+			#outer{
+				margin-left:400px;
+				margin-right:400px;
+				margin-top:20px;
+			}
+			#image{
+				margin-left:300px;
+			}
+			#shopping{
+				position:absolute;
+				margin-left:385px;
+				top:40px;
+			}
+			#fields{
+				margin-left:20px;
+				margin-top:20px;
+			}
+			#buttons{
+				margin-left:390px;
+				padding-bottom:20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="layout" id="outer">
+			<p><div><img id="image" src="ebay.jpg" width="80px" height="80px" /><h2 id="shopping">Shopping</h2></div></p><br />
+			<div class="layout" id="inner">
+				<div id="fields">
+				  <form id="myform" action="<?php echo $_SERVER['PHP_SELF']?>" method="POST" autocomplete="off">
+					<b>Key Words*:</b>	<div class="entries"> 																																																																																					
+											<input type="text" id="Keywords" name="keywords" size="70" />
+										</div>
+					<b>Price Range:</b> <div class="entries">
+											from $ <input type="text" id="From" name="from" size="10" /> 
+											to $ <input type="text" id="To" name="to" size="10" />
+										</div>
+					<b>Condition:</b> 	<div class="entries">
+											<input type="checkbox" id="New" name="condition" value="New" />New
+											<input type="checkbox" id="Used" name="condition" value="Used" />Used
+											<input type="checkbox" id="VGood" name="condition" value="Very Good" />Very Good
+											<input type="checkbox" id="Good" name="condition" value="Good" />Good
+											<input type="checkbox" id="Acceptable" name="condition" value="Acceptable" />Acceptable
+										</div>
+					<b>Buying Formats:</b>	<div class="entries">
+												<input type="checkbox" id="Buy" name="buying" value="Buy It Now" />Buy It Now
+												<input type="checkbox" id="Auction" name="buying" value="Auction" />Auction
+												<input type="checkbox" id="Ads" name="buying" value="Classified Ads" />Classified Ads
+											</div>
+					<b>Seller:</b> 	<div class="entries">
+										<input type="checkbox"  id="Seller" name="seller" value="Return accepted" />Return accepted
+									</div>
+					<b>Shipping:</b> <div class="entries">
+										<input type="checkbox" id="Free" name="shipping" value="Free Shipping" />Free Shipping<br />
+										<input type="checkbox" id="Expedited" name="shipping" value="Expedited shipping available" />Expedited shipping available<br />
+										Max handling time (days): <input type="text" id="Days" name="days" size="10" /><br />
+									 </div>
+					<b>Sort by:</b> 
+									<div class="entries">
+										<select id="Sort" name="sort">
+											<option value="Best Match">Best Match</option>
+											<option value="Price: highest first">Price: highest first</option>
+											<option value="Price: lowest first">Price: lowest first</option>
+											<option value="Price + Shipping: highest first">Price + Shipping: highest first</option>
+											<option value="Price + Shipping: lowest first">Price + Shipping: lowest first</option>
+										</select><br />
+									</div>
+					<b>Results Per Page:</b>
+												<div class="entries">
+													<select id="Result" name="result">
+														<option value="5">5</option>
+														<option value="10">10</option>
+														<option value="15">15</option>
+														<option value="20">20</option>
+													</select><br />
+												</div>
+					<div id="buttons">
+						<input type="reset" name="clear" value="clear" onclick="clearFields()" />
+						<input type="submit" name="search" value="search" onclick="query()" />
+					</div>
+				  </form>	
+				</div>
+			</div>
+		</div>
+		
+		<script language="Javascript" >
+			var key=document.getElementById("Keywords").value;
+			var from=document.getElementById("From").value;
+			var to=document.getElementById("To").value;
+			var newv=document.getElementById("New").value;
+			var used=document.getElementById("Used").value;
+			var vgood=document.getElementById("VGood").value;
+			var good=document.getElementById("Good").value;
+			var acc=document.getElementById("Acceptable").value;
+			var buy=document.getElementById("Buy").value;
+			var auc=document.getElementById("Auction").value;
+			var ads=document.getElementById("Ads").value;
+			var sell=document.getElementById("Seller").value;
+			var free=document.getElementById("Free").value;
+			var exp=document.getElementById("Expedited").value;
+			var days=document.getElementById("Days").value;
+			var sort=document.getElementById("Sort").value;
+			var res=document.getElementById("Result").value;
+					
+			function clearFields(){
+				key = from = to = days = "";
+				newv.checked = used.checked = vgood.checked = good.checked = acc.checked = buy.checked = auc.checked = ads.checked = sell.checked = free.checked = exp.checked = false;
+				if(sort.options.length!=null && res.options.length!=null)
+				sort.options.length = res.options.length = 0;		
+			}
+			
+			function query(){
+				if(Keywords.value=="")
+					alert("Please enter value for Key Words");
+				else if(parseFloat(From.value,10) < 0 || parseFloat(To.value,10) < 0)
+					alert("Price must be a positive or a decimal number");
+				else if(parseFloat(From.value,10) > parseFloat(To.value,10))
+					alert("Minimum price must be lower than or same as the Maximum price");
+				else if(isNaN(parseFloat(From.value))==true || isNaN(parseFloat(To.value))==true)
+					alert("Price should be a number");
+				else if(New.checked==false && Used.checked==false && VGood.checked==false && Good.checked==false && Acceptable.checked==false)
+					alert("Please select atleast one condition");
+				else if(Buy.checked==false && Auction.checked==false && Ads.checked==false)
+					alert("Please select atleast one buying format");
+				else if(parseInt(Days.value,10) < 1)
+					alert("Handling Time will take atleast 1 day");
+			}
+				
+		</script>
+		
+		<?php
+			$host = 'http://svcs.ebay.com/services/search/FindingService/v1?';  
+			$responseDataFormat = 'XML';   
+			$version = '1.0.0';
+			$appID   = <your-appId>
+
+			$APIRequestURL  = "$host"."siteid=0"
+							  ."&SECURITY-APPNAME=$appID"
+							  ."&OPERATION-NAME=findItemsAdvanced"
+							  ."&SERVICE-VERSION=$version"
+							  ."&RESPONSE-DATA-FORMAT=$responseDataFormat"
+							  ."&keywords=".urlencode($_POST['keywords'])
+							  ."&itemFilter[0].name=MinPrice"
+							  ."&itemFilter[0].value=".$_POST['from']
+							  ."&itemFilter[1].name=MaxPrice"
+							  ."&itemFilter[1].value=".$_POST['to']
+							  ."&itemFilter[2].name=Condition"
+							  ."&itemFilter[2].value[0]=1000"
+							  ."&itemFilter[2].value[1]=2000"
+							  ."&itemFilter[2].value[2]=3000"
+							  ."&itemFilter[3].name=ListingType"
+							  ."&itemFilter[3].value=FixedPrice"
+							  ."&itemFilter[4].name=ReturnsAcceptedOnly"
+							  ."&itemFilter[4].value=true"
+							  ."&itemFilter[5].name=FreeShippingOnly"
+							  ."&itemFilter[5].value=true"
+							  ."&itemFilter[6].name=ExpeditedShippingType"
+							  ."&itemFilter[6].value=Expedited"
+							  ."&itemFilter[7].name=MaxHandlingTime"
+							  ."&itemFilter[7].value=".$_POST['days']
+							  ."&sortOrder=".$_POST['name']
+							  ."&paginationInput.entriesPerPage".$_POST['result'];
+
+			$responseXML = simplexml_load_file($APIRequestURL);
+			echo $responseXML;
+		?>
+		<noscript>
+	</body>
+</html>
